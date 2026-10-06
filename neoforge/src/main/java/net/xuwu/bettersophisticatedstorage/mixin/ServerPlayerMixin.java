@@ -32,7 +32,6 @@ public abstract class ServerPlayerMixin
     {
         String className = menu.getClass().getName();
         return className.startsWith("com.wintercogs.beyonddimensions.")
-                || className.startsWith("org.cyclops.integratedterminals.inventory.container.")
                 || className.startsWith("com.refinedmods.refinedstorage.");
     }
 

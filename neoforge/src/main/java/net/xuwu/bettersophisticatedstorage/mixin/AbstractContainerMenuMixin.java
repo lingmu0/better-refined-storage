@@ -166,7 +166,6 @@ public abstract class AbstractContainerMenuMixin implements NetworkStorageMenuAc
     {
         String className = ((Object) this).getClass().getName();
         return className.startsWith("com.wintercogs.beyonddimensions.")
-                || className.startsWith("org.cyclops.integratedterminals.inventory.container.")
                 || className.startsWith("com.refinedmods.refinedstorage.")
                 || className.equals("net.minecraft.client.gui.screens.inventory."
                 + "CreativeModeInventoryScreen$ItemPickerMenu");

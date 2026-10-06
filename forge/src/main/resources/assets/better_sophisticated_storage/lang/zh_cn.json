@@ -12,7 +12,7 @@
   "better_sophisticated_storage.tooltip.shift_player": "玩家物品栏 Shift 转移到精致存储网络",
   "better_sophisticated_storage.tooltip.shift_container": "打开的容器 Shift 转移到精致存储网络",
   "better_sophisticated_storage.tooltip.deposit_container": "将打开的容器物品一键存入精致存储网络",
-  "better_sophisticated_storage.tooltip.deposit_player": "将玩家物品栏（不含快捷栏和便携终端）一键存入精致存储网络",
+  "better_sophisticated_storage.tooltip.deposit_player": "将玩家物品栏（不含快捷栏和无线终端）一键存入精致存储网络",
   "better_sophisticated_storage.tooltip.shortcut": "快捷键：%s",
   "better_sophisticated_storage.tooltip.hide_sidebar": "点击隐藏；按住并拖动可移动侧边栏",
   "better_sophisticated_storage.tooltip.show_sidebar": "点击显示；按住并拖动可移动侧边栏",

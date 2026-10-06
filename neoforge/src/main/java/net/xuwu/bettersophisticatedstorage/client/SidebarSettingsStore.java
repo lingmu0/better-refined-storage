@@ -153,7 +153,7 @@ public final class SidebarSettingsStore
         }
         catch (IOException | RuntimeException exception)
         {
-            LOGGER.warn("Could not read Better Sophisticated Storage sidebar settings from {}", file, exception);
+            LOGGER.warn("Could not read Better Refined Storage sidebar settings from {}", file, exception);
         }
     }
 
@@ -186,7 +186,7 @@ public final class SidebarSettingsStore
         }
         catch (IOException exception)
         {
-            LOGGER.warn("Could not save Better Sophisticated Storage sidebar settings to {}", file, exception);
+            LOGGER.warn("Could not save Better Refined Storage sidebar settings to {}", file, exception);
         }
     }
 

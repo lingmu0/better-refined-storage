@@ -138,12 +138,12 @@ public final class StorageActions
         }
 
         Inventory inventory = player.getInventory();
-        // Keep the portable terminal in place.  This applies even when the terminal is in the
+        // Keep the wireless grid in place. This applies even when the grid is in the
         // ordinary main inventory; Curios slots are never part of this deposit pass.
         for (int index = 9; index < 36; index++)
         {
             ItemStack stack = inventory.getItem(index);
-            if (!PortableStorageNetwork.isPortableTerminal(stack))
+            if (!PortableStorageNetwork.isRefinedStorageWirelessGrid(stack))
             {
                 depositStack(connection, stack);
             }
@@ -181,7 +181,7 @@ public final class StorageActions
         for (Slot slot : menu.slots)
         {
             if (slot instanceof NetworkStorageSlot || slot.container == playerInventory || !slot.hasItem()
-                    || PortableStorageNetwork.isPortableTerminal(slot.getItem()))
+                    || PortableStorageNetwork.isRefinedStorageWirelessGrid(slot.getItem()))
             {
                 continue;
             }
@@ -253,7 +253,7 @@ public final class StorageActions
             return false;
         }
         Slot slot = menu.slots.get(slotId);
-        if (!slot.hasItem() || PortableStorageNetwork.isPortableTerminal(slot.getItem()))
+        if (!slot.hasItem() || PortableStorageNetwork.isRefinedStorageWirelessGrid(slot.getItem()))
         {
             return false;
         }
@@ -308,7 +308,7 @@ public final class StorageActions
             return 0;
         }
         ItemStack source = slot.getItem().copy();
-        if (PortableStorageNetwork.isPortableTerminal(source))
+        if (PortableStorageNetwork.isRefinedStorageWirelessGrid(source))
         {
             return 0;
         }
@@ -374,7 +374,7 @@ public final class StorageActions
                 break;
             }
             ItemStack output = resultSlot.getItem().copy();
-            if (PortableStorageNetwork.isPortableTerminal(output))
+            if (PortableStorageNetwork.isRefinedStorageWirelessGrid(output))
             {
                 break;
             }
@@ -530,7 +530,7 @@ public final class StorageActions
                 player.containerMenu.setCarried(extracted);
             }
         }
-        else if (!PortableStorageNetwork.isPortableTerminal(carried))
+        else if (!PortableStorageNetwork.isRefinedStorageWirelessGrid(carried))
         {
             int request = button == 0 ? carried.getCount() : 1;
             int inserted = connection.insert(withCount(carried, request), false);
@@ -622,7 +622,7 @@ public final class StorageActions
             return;
         }
         ItemStack hotbar = player.getInventory().getItem(button).copy();
-        if (!hotbar.isEmpty() && !PortableStorageNetwork.isPortableTerminal(hotbar))
+        if (!hotbar.isEmpty() && !PortableStorageNetwork.isRefinedStorageWirelessGrid(hotbar))
         {
             int inserted = connection.insert(hotbar, false);
             if (inserted > 0)
@@ -659,7 +659,7 @@ public final class StorageActions
 
     private static int depositStack(PortableStorageNetwork.Connection connection, ItemStack stack)
     {
-        if (stack == null || stack.isEmpty() || PortableStorageNetwork.isPortableTerminal(stack))
+        if (stack == null || stack.isEmpty() || PortableStorageNetwork.isRefinedStorageWirelessGrid(stack))
         {
             return 0;
         }

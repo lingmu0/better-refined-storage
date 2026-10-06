@@ -4,7 +4,7 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
 
-/** Read-only snapshot adapter for the portable Integrated Terminals storage network. */
+/** Read-only snapshot adapter for the connected Refined Storage network. */
 public final class NetworkStorage
 {
     private NetworkStorage()

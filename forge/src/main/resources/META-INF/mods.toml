@@ -64,22 +64,8 @@ side = "BOTH"
 
 [[dependencies."${mod_id}"]]
 modId = "refinedstorage"
-mandatory = false
+mandatory = true
 versionRange = "[1.12,)"
-ordering = "AFTER"
-side = "BOTH"
-
-[[dependencies."${mod_id}"]]
-modId = "integratedterminals"
-mandatory = false
-versionRange = "[1.0.0,)"
-ordering = "AFTER"
-side = "BOTH"
-
-[[dependencies."${mod_id}"]]
-modId = "sophisticatedstorage"
-mandatory = false
-versionRange = "[0,)"
 ordering = "AFTER"
 side = "BOTH"
 

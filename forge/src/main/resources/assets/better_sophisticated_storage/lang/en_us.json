@@ -1,6 +1,6 @@
 {
-  "better_sophisticated_storage.search": "Search Sophisticated Storage",
-  "better_sophisticated_storage.network": "Sophisticated Storage",
+  "better_sophisticated_storage.search": "Search Refined Storage",
+  "better_sophisticated_storage.network": "Refined Storage",
   "better_sophisticated_storage.deposit_container": "Deposit container",
   "better_sophisticated_storage.deposit_player": "Deposit inventory",
   "better_sophisticated_storage.shift_player": "Player shift target",
@@ -9,15 +9,15 @@
   "better_sophisticated_storage.button.shift_container": "Cont.%s",
   "better_sophisticated_storage.button.deposit_container": "Put Cont.",
   "better_sophisticated_storage.button.deposit_player": "Put Inv.",
-  "better_sophisticated_storage.tooltip.shift_player": "Shift-transfer player inventory items to Sophisticated Storage",
-  "better_sophisticated_storage.tooltip.shift_container": "Shift-transfer open container items to Sophisticated Storage",
-  "better_sophisticated_storage.tooltip.deposit_container": "Deposit all eligible open-container items into Sophisticated Storage",
-  "better_sophisticated_storage.tooltip.deposit_player": "Deposit the player inventory, excluding the hotbar and portable terminal",
+  "better_sophisticated_storage.tooltip.shift_player": "Shift-transfer player inventory items to Refined Storage",
+  "better_sophisticated_storage.tooltip.shift_container": "Shift-transfer open container items to Refined Storage",
+  "better_sophisticated_storage.tooltip.deposit_container": "Deposit all eligible open-container items into Refined Storage",
+  "better_sophisticated_storage.tooltip.deposit_player": "Deposit the player inventory, excluding the hotbar and wireless grid",
   "better_sophisticated_storage.tooltip.shortcut": "Shortcut: %s",
   "better_sophisticated_storage.tooltip.hide_sidebar": "Click to hide; hold and drag to move the sidebar",
   "better_sophisticated_storage.tooltip.show_sidebar": "Click to show; hold and drag to move the sidebar",
   "key.better_sophisticated_storage.deposit_container": "Deposit container",
   "key.better_sophisticated_storage.deposit_player": "Deposit inventory",
-  "key.categories.better_sophisticated_storage": "Better Sophisticated Storage"
+  "key.categories.better_sophisticated_storage": "Better Refined Storage"
 }
 

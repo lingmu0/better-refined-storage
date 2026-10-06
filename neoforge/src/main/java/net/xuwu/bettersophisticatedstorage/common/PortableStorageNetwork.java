@@ -18,29 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 /**
- * Runtime bridge to Integrated Terminals' portable item-storage terminal.
- *
- * <p>The bridge is deliberately reflective.  Integrated Dynamics changed its capability
- * optional type between the two supported loader versions, while the actual terminal and
- * storage contract stayed the same.  Keeping those classes out of the compile classpath also
- * lets this add-on remain a small, optional compatibility layer.</p>
+ * Runtime bridge to Refined Storage wireless grids.
  */
 public final class PortableStorageNetwork
 {
-    public static final String PORTABLE_TERMINAL_ID = "integratedterminals:terminal_storage_portable";
     private static final String REFINED_STORAGE_WIRELESS_GRID_ID = "refinedstorage:wireless_grid";
     private static final String REFINED_STORAGE_CREATIVE_WIRELESS_GRID_ID =
             "refinedstorage:creative_wireless_grid";
 
-    private static final String TERMINAL_CONTAINER_CLASS =
-            "org.cyclops.integratedterminals.inventory.container.ContainerTerminalStorageItem";
-    private static final String NETWORK_HELPERS_CLASS =
-            "org.cyclops.integrateddynamics.core.helper.NetworkHelpers";
-    private static final String INGREDIENT_COMPONENT_CLASS =
-            "org.cyclops.commoncapabilities.api.ingredient.IngredientComponent";
     private static final String CURIOS_API_CLASS = "top.theillusivec4.curios.api.CuriosApi";
     private static final String REFINED_STORAGE_API_CLASS =
             "com.refinedmods.refinedstorage.common.api.RefinedStorageApi";
@@ -50,17 +37,13 @@ public final class PortableStorageNetwork
             "com.refinedmods.refinedstorage.common.support.slotreference.InventorySlotReference";
 
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static boolean apiFailureReported;
     private static boolean refinedStorageApiFailureReported;
 
     private PortableStorageNetwork()
     {
     }
 
-    /**
-     * Finds the first portable terminal carried by the player and resolves its item-storage
-     * channel.  A terminal may be in the normal inventory or in a Curios accessory slot.
-     */
+    /** Finds a bound wireless grid in the inventory or a Curios accessory slot. */
     public static Connection find(Player player)
     {
         if (!(player instanceof ServerPlayer serverPlayer))
@@ -68,92 +51,10 @@ public final class PortableStorageNetwork
             return null;
         }
 
-        Connection refinedStorageConnection = findRefinedStorageConnection(serverPlayer);
-        if (refinedStorageConnection != null)
-        {
-            return refinedStorageConnection;
-        }
-
-        ItemStack terminal = findIntegratedTerminalsTerminal(serverPlayer);
-        if (terminal.isEmpty())
-        {
-            return null;
-        }
-
-        try
-        {
-            Class<?> containerClass = Class.forName(TERMINAL_CONTAINER_CLASS);
-            Object networkOptional = invokeStatic(containerClass, "getNetworkFromItem", terminal);
-            Object network = unwrapOptional(networkOptional);
-            if (network == null)
-            {
-                return null;
-            }
-
-            Class<?> componentClass = Class.forName(INGREDIENT_COMPONENT_CLASS);
-            Field itemStackField = componentClass.getField("ITEMSTACK");
-            Object itemStackComponent = itemStackField.get(null);
-            if (itemStackComponent == null)
-            {
-                return null;
-            }
-
-            Object ingredientNetwork = findIngredientNetwork(network, itemStackComponent);
-            if (ingredientNetwork == null)
-            {
-                return null;
-            }
-
-            Object storage = invokeCompatible(ingredientNetwork, "getChannel", -1);
-            if (storage == null)
-            {
-                storage = invokeCompatible(ingredientNetwork, "getChannelInternal", -1);
-            }
-            Object matcher = invokeCompatible(itemStackComponent, "getMatcher");
-            Object exactMatchNoQuantity = matcher == null
-                    ? null : invokeCompatible(matcher, "getExactMatchNoQuantityCondition");
-            if (storage == null || matcher == null || exactMatchNoQuantity == null)
-            {
-                return null;
-            }
-
-            return new Connection(storage, matcher, exactMatchNoQuantity);
-        }
-        catch (Throwable exception)
-        {
-            reportApiFailure(exception);
-            return null;
-        }
+        return findRefinedStorageConnection(serverPlayer);
     }
 
-    public static boolean isPortableTerminal(ItemStack stack)
-    {
-        if (stack == null || stack.isEmpty())
-        {
-            return false;
-        }
-        var key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        if (key == null)
-        {
-            return false;
-        }
-        String itemId = key.toString();
-        return PORTABLE_TERMINAL_ID.equals(itemId)
-                || REFINED_STORAGE_WIRELESS_GRID_ID.equals(itemId)
-                || REFINED_STORAGE_CREATIVE_WIRELESS_GRID_ID.equals(itemId);
-    }
-
-    private static boolean isIntegratedTerminalsTerminal(ItemStack stack)
-    {
-        if (stack == null || stack.isEmpty())
-        {
-            return false;
-        }
-        var key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return key != null && PORTABLE_TERMINAL_ID.equals(key.toString());
-    }
-
-    private static boolean isRefinedStorageWirelessGrid(ItemStack stack)
+    static boolean isRefinedStorageWirelessGrid(ItemStack stack)
     {
         if (stack == null || stack.isEmpty())
         {
@@ -167,21 +68,6 @@ public final class PortableStorageNetwork
         String itemId = key.toString();
         return REFINED_STORAGE_WIRELESS_GRID_ID.equals(itemId)
                 || REFINED_STORAGE_CREATIVE_WIRELESS_GRID_ID.equals(itemId);
-    }
-
-    private static ItemStack findIntegratedTerminalsTerminal(ServerPlayer player)
-    {
-        Inventory inventory = player.getInventory();
-        for (int index = 0; index < inventory.getContainerSize(); index++)
-        {
-            ItemStack stack = inventory.getItem(index);
-            if (isIntegratedTerminalsTerminal(stack))
-            {
-                return stack;
-            }
-        }
-
-        return findCuriosStack(player, PortableStorageNetwork::isIntegratedTerminalsTerminal);
     }
 
     /** Supports both Curios' 1.20 helper API and its 1.21 inventory API. */
@@ -450,43 +336,6 @@ public final class PortableStorageNetwork
         return invokeStatic(resourceClass, "ofItemStack", key);
     }
 
-    private static Object findIngredientNetwork(Object network, Object itemStackComponent)
-            throws ReflectiveOperationException
-    {
-        Class<?> helpersClass = Class.forName(NETWORK_HELPERS_CLASS);
-        for (Method method : helpersClass.getMethods())
-        {
-            if (!method.getName().equals("getIngredientNetwork") || method.getParameterCount() != 2)
-            {
-                continue;
-            }
-
-            Class<?> optionalType = method.getParameterTypes()[0];
-            Object optionalNetwork;
-            if (Optional.class.isAssignableFrom(optionalType))
-            {
-                optionalNetwork = Optional.of(network);
-            }
-            else if (optionalType.getName().equals("net.minecraftforge.common.util.LazyOptional"))
-            {
-                Method of = optionalType.getMethod("of", Supplier.class);
-                optionalNetwork = of.invoke(null, (Supplier<Object>) () -> network);
-            }
-            else
-            {
-                continue;
-            }
-
-            Object result = method.invoke(null, optionalNetwork, itemStackComponent);
-            Object unwrapped = unwrapOptional(result);
-            if (unwrapped != null)
-            {
-                return unwrapped;
-            }
-        }
-        return null;
-    }
-
     private static Object unwrapOptional(Object optional) throws ReflectiveOperationException
     {
         if (optional == null)
@@ -660,53 +509,28 @@ public final class PortableStorageNetwork
                 || (parameterType == char.class && argument instanceof Character);
     }
 
-    private static void reportApiFailure(Throwable exception)
-    {
-        if (!apiFailureReported)
-        {
-            apiFailureReported = true;
-            LOGGER.warn("Better Sophisticated Storage could not resolve the Integrated Terminals storage API; "
-                    + "the sidebar will stay disabled until the required mods are available.", exception);
-        }
-    }
-
     private static void reportRefinedStorageApiFailure(Throwable exception)
     {
         if (!refinedStorageApiFailureReported)
         {
             refinedStorageApiFailureReported = true;
-            LOGGER.warn("Better Sophisticated Storage could not resolve the Refined Storage wireless-grid API; "
+            LOGGER.warn("Better Refined Storage could not resolve the Refined Storage wireless-grid API; "
                     + "the sidebar will stay disabled for that terminal.", exception);
         }
     }
 
-    /** A safe, item-stack-specific façade over an Integrated Dynamics ingredient channel. */
+    /** A façade over a Refined Storage network's item storage. */
     public static final class Connection
     {
         private final Object storage;
-        private final Object matcher;
-        private final Object exactMatchNoQuantity;
         private final Object refinedStorageContext;
         private final Object refinedStorageNetwork;
         private final Object refinedStorageActor;
         private final ServerPlayer refinedStoragePlayer;
 
-        private Connection(Object storage, Object matcher, Object exactMatchNoQuantity)
-        {
-            this.storage = storage;
-            this.matcher = matcher;
-            this.exactMatchNoQuantity = exactMatchNoQuantity;
-            this.refinedStorageContext = null;
-            this.refinedStorageNetwork = null;
-            this.refinedStorageActor = null;
-            this.refinedStoragePlayer = null;
-        }
-
         private Connection(Object storage, Object context, Object network, Object actor, ServerPlayer player)
         {
             this.storage = storage;
-            this.matcher = null;
-            this.exactMatchNoQuantity = null;
             this.refinedStorageContext = context;
             this.refinedStorageNetwork = network;
             this.refinedStorageActor = actor;
@@ -720,35 +544,7 @@ public final class PortableStorageNetwork
                 return refinedStorageEntries();
             }
 
-            List<StorageEntry> result = new ArrayList<>();
-            if (!(storage instanceof Iterable<?> iterable))
-            {
-                return result;
-            }
-
-            try
-            {
-                for (Object value : iterable)
-                {
-                    if (!(value instanceof ItemStack stack) || stack.isEmpty())
-                    {
-                        continue;
-                    }
-                    long amount = quantity(stack);
-                    if (amount <= 0L)
-                    {
-                        continue;
-                    }
-                    ItemStack key = stack.copy();
-                    key.setCount(1);
-                    mergeEntry(result, key, amount);
-                }
-            }
-            catch (Throwable ignored)
-            {
-                // A network may be rebuilding its index; show the entries collected so far.
-            }
-            return result;
+            return refinedStorageEntries();
         }
 
         public long amount(ItemStack prototype)
@@ -773,24 +569,7 @@ public final class PortableStorageNetwork
             {
                 return 0;
             }
-            if (refinedStorageContext != null)
-            {
-                return refinedStorageInsert(input, simulate);
-            }
-
-            try
-            {
-                Object remainder = invokeCompatible(storage, "insert", input.copy(), simulate);
-                if (remainder instanceof ItemStack remainderStack)
-                {
-                    return Math.max(0, input.getCount() - remainderStack.getCount());
-                }
-            }
-            catch (Throwable ignored)
-            {
-                // Treat an unavailable network tick as a full remainder.
-            }
-            return 0;
+            return refinedStorageInsert(input, simulate);
         }
 
         public ItemStack extract(ItemStack prototype, long maxAmount, boolean simulate)
@@ -799,24 +578,7 @@ public final class PortableStorageNetwork
             {
                 return ItemStack.EMPTY;
             }
-            if (refinedStorageContext != null)
-            {
-                return refinedStorageExtract(prototype, maxAmount, simulate);
-            }
-
-            int amount = (int) Math.min(Integer.MAX_VALUE, maxAmount);
-            ItemStack request = prototype.copy();
-            request.setCount(amount);
-            try
-            {
-                Object extracted = invokeCompatible(storage, "extract", request,
-                        exactMatchNoQuantity, simulate);
-                return extracted instanceof ItemStack stack ? stack : ItemStack.EMPTY;
-            }
-            catch (Throwable ignored)
-            {
-                return ItemStack.EMPTY;
-            }
+            return refinedStorageExtract(prototype, maxAmount, simulate);
         }
 
         private List<StorageEntry> refinedStorageEntries()
@@ -900,23 +662,6 @@ public final class PortableStorageNetwork
             {
                 return ItemStack.EMPTY;
             }
-        }
-
-        private long quantity(ItemStack stack)
-        {
-            try
-            {
-                Object value = invokeCompatible(matcher, "getQuantity", stack);
-                if (value instanceof Number number)
-                {
-                    return number.longValue();
-                }
-            }
-            catch (Throwable ignored)
-            {
-                // Fall back to the vanilla stack count below.
-            }
-            return stack.getCount();
         }
 
         private static void mergeEntry(List<StorageEntry> entries, ItemStack key, long amount)

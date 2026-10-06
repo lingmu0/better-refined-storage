@@ -2,7 +2,7 @@ package net.xuwu.bettersophisticatedstorage.common;
 
 import net.minecraft.world.item.ItemStack;
 
-/** One item key and its amount in the portable terminal's item network. */
+/** One item key and its amount in the Refined Storage network. */
 public record StorageEntry(ItemStack stack, long amount, long insertedTime, long modifiedTime)
 {
     public StorageEntry(ItemStack stack, long amount)

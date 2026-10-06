@@ -155,9 +155,7 @@ dependencies {
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    // The runtime bridge talks to Integrated Terminals and Sophisticated Storage reflectively.
-    // Keeping those jars out of the compile classpath makes the add-on safe to load before either
-    // optional integration is present.
+    // Refined Storage is a required runtime dependency; the bridge resolves its API reflectively.
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar

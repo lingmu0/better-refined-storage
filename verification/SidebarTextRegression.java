@@ -27,7 +27,7 @@ public final class SidebarTextRegression
         }
         ToIntFunction<String> metrics = value -> value.codePoints().map(c -> c == '.' ? 2 : c > 127 ? 9 : 6).sum();
         check(SidebarText.ellipsize("Search...", 42, metrics).equals("Search..."), "Exact fit remains unchanged");
-        check(SidebarText.ellipsize("Search Sophisticated Storage", 72, metrics).equals("Search Soph..."),
+        check(SidebarText.ellipsize("Search Refined Storage", 72, metrics).equals("Search Refi..."),
                 "Long English prompt must end with three dots");
         check(SidebarText.ellipsize("搜索精致存储网络", 60, metrics).equals("搜索精致存储..."),
                 "Chinese prompt must fit by measured width, not character count");

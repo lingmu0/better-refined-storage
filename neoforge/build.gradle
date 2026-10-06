@@ -111,8 +111,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 
 dependencies {
-    // The runtime bridge talks to Integrated Terminals and Sophisticated Storage reflectively.
-    // Their jars are intentionally not required by the compile classpath.
+    // Refined Storage is a required runtime dependency; the bridge resolves its API reflectively.
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar

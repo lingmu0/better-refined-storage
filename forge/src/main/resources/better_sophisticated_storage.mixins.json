@@ -6,8 +6,7 @@
   "refmap": "better_sophisticated_storage.refmap.json",
   "mixins": [
     "AbstractContainerMenuMixin",
-    "ServerPlayerMixin",
-    "compat.SophisticatedStorageContainerMenuMixin"
+    "ServerPlayerMixin"
   ],
   "client": [
     "EditBoxFocusMixin",

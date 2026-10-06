@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.11
+
+- Rename the user-facing project to Better Refined Storage to make the primary Refined Storage integration clear.
+- Remove Integrated Terminals / Sophisticated Storage compatibility; Refined Storage is now the sole storage integration.
+- Update English search, network, tooltip, and key-category labels to say Refined Storage.
+
 ## 0.4.10
 
 - Hide the sidebar count label when the stored amount is exactly one, matching vanilla inventory behavior.
@@ -14,4 +20,4 @@
 - Restore Refined Storage network discovery and server-authorized sidebar interaction.
 - Exclude Refined Storage's own screens from the sidebar.
 - Use vanilla-style panels and recessed inventory slots.
-- Skip portable terminals during bulk deposits.
+- Skip Refined Storage wireless grids during bulk deposits.

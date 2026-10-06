@@ -319,7 +319,6 @@ public abstract class AbstractContainerScreenMixin<T extends AbstractContainerMe
     {
         String className = this.getClass().getName();
         return className.startsWith("com.wintercogs.beyonddimensions.")
-                || className.startsWith("org.cyclops.integratedterminals.")
                 || className.startsWith("com.refinedmods.refinedstorage.");
     }
 

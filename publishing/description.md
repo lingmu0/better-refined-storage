@@ -1,14 +1,14 @@
-# Better Sophisticated Storage
+# Better Refined Storage
 
-A vanilla-style storage sidebar for Refined Storage, inspired by Better Beyond Dimensions. Access your connected network while working in your inventory, a crafting table, or another container—without repeatedly opening the wireless grid.
+A Refined Storage addon that adds a searchable, vanilla-style network sidebar to inventory and container screens. Use your connected Refined Storage wireless grid without repeatedly opening it. The interface takes inspiration from Better Beyond Dimensions.
 
 ## Features
 
 - A searchable item list beside compatible inventory and container screens. Refined Storage's own screens are excluded.
-- Requires a bound, usable wireless grid or creative wireless grid in your inventory. Optional Curios integration also recognizes terminals worn in accessory slots.
+- Refined Storage is the primary integration. Carry a bound, usable wireless grid or creative wireless grid in your inventory. Optional Curios support also recognizes wireless grids worn in accessory slots.
 - Left-click to extract a stack, right-click to extract one item, or click while carrying an item to deposit it.
 - Separate player and container Shift-transfer switches, plus one-click Deposit Inventory and Deposit Container buttons.
-- Deposit Inventory processes the main inventory, not the hotbar. Bulk deposits skip portable terminals so your network access item stays with you.
+- Deposit Inventory processes the main inventory, not the hotbar. Bulk deposits skip Refined Storage wireless grids so your network access item stays with you.
 - Vanilla-style panels and item slots. Counts remain above item models; a count of one is hidden, and large totals use K/M/B abbreviations.
 - Long search hints end in `...`. Search supports item names and registry names.
 - Network access, item identity, and transferred quantities are checked on the server.
@@ -22,7 +22,7 @@ Install this addon on both client and server, together with the matching Refined
 
 Bind your wireless grid to a working network. The sidebar appears only while the server confirms that the terminal can access the network. Network permissions, wireless range, and terminal energy still apply.
 
-Curios is optional. For the alternative Integrated Terminals integration, install Integrated Terminals and its required dependencies; Sophisticated Storage compatibility is supported separately. Neither Better Beyond Dimensions nor Beyond Dimensions is required.
+Refined Storage is required. Curios is only needed if you want to wear a wireless grid in an accessory slot. Neither Better Beyond Dimensions nor Beyond Dimensions is required.
 
 ## Controls and settings
 
@@ -32,6 +32,6 @@ Client settings are saved in `config/better_sophisticated_storage-settings.json`
 
 ## Source and issues
 
-[Source code and issue tracker](https://github.com/lingmu0/better-sophisticated-storage)
+[Source code and issue tracker](https://github.com/lingmu0/better-refined-storage)
 
-This is an independent addon, not an official Refined Storage, Sophisticated Storage, or Integrated Terminals project. Distributed under the MIT License.
+This is an independent Refined Storage addon, not an official Refined Storage project. Distributed under the MIT License.

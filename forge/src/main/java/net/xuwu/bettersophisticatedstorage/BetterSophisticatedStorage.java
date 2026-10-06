@@ -4,11 +4,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * Better Sophisticated Storage entry point.
+ * Better Refined Storage entry point (keeps the original internal mod id for compatibility).
  *
  * <p>The actual storage access is deliberately kept in the server-side
- * {@code common} package so every action is checked against the currently
- * equipped Integrated Terminals portable storage network.</p>
+ * {@code common} package so every action is checked against the player's
+ * connected Refined Storage wireless grid.</p>
  */
 @Mod(BetterSophisticatedStorage.MODID)
 public final class BetterSophisticatedStorage

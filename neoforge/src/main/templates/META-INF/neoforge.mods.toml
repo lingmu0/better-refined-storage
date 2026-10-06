@@ -73,16 +73,9 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies."${mod_id}"]]
-modId = "integratedterminals"
-type = "optional"
-versionRange = "[1.0.0,)"
-ordering = "AFTER"
-side = "BOTH"
-
-[[dependencies."${mod_id}"]]
-modId = "sophisticatedstorage"
-type = "optional"
-versionRange = "[0,)"
+modId = "refinedstorage"
+type = "required"
+versionRange = "[2,)"
 ordering = "AFTER"
 side = "BOTH"
 
