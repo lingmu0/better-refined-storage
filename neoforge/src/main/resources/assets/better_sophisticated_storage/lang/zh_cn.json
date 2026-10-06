@@ -1,0 +1,23 @@
+{
+  "better_sophisticated_storage.search": "搜索精致存储网络",
+  "better_sophisticated_storage.network": "精致存储",
+  "better_sophisticated_storage.deposit_container": "存入容器",
+  "better_sophisticated_storage.deposit_player": "存入背包",
+  "better_sophisticated_storage.shift_player": "玩家 shift 目标",
+  "better_sophisticated_storage.shift_container": "容器 shift 目标",
+  "better_sophisticated_storage.button.shift_player": "玩家%s",
+  "better_sophisticated_storage.button.shift_container": "容器%s",
+  "better_sophisticated_storage.button.deposit_container": "存容器",
+  "better_sophisticated_storage.button.deposit_player": "存背包",
+  "better_sophisticated_storage.tooltip.shift_player": "玩家物品栏 Shift 转移到精致存储网络",
+  "better_sophisticated_storage.tooltip.shift_container": "打开的容器 Shift 转移到精致存储网络",
+  "better_sophisticated_storage.tooltip.deposit_container": "将打开的容器物品一键存入精致存储网络",
+  "better_sophisticated_storage.tooltip.deposit_player": "将玩家物品栏（不含快捷栏和便携终端）一键存入精致存储网络",
+  "better_sophisticated_storage.tooltip.shortcut": "快捷键：%s",
+  "better_sophisticated_storage.tooltip.hide_sidebar": "点击隐藏；按住并拖动可移动侧边栏",
+  "better_sophisticated_storage.tooltip.show_sidebar": "点击显示；按住并拖动可移动侧边栏",
+  "key.better_sophisticated_storage.deposit_container": "存入容器",
+  "key.better_sophisticated_storage.deposit_player": "存入背包",
+  "key.categories.better_sophisticated_storage": "更好的精致存储"
+}
+

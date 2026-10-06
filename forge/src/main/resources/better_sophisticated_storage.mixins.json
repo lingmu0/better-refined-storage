@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.xuwu.bettersophisticatedstorage.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "better_sophisticated_storage.refmap.json",
+  "mixins": [
+    "AbstractContainerMenuMixin",
+    "ServerPlayerMixin",
+    "compat.SophisticatedStorageContainerMenuMixin"
+  ],
+  "client": [
+    "EditBoxFocusMixin",
+    "ScreenWidgetAccessor",
+    "SlotPositionAccessor",
+    "AbstractContainerScreenMixin",
+    "CreativeInventorySlotFilterMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+

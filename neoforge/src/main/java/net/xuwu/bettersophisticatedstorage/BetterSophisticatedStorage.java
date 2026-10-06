@@ -1,0 +1,24 @@
+package net.xuwu.bettersophisticatedstorage;
+
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+
+/** NeoForge 1.21.1 entry point. */
+@Mod(BetterSophisticatedStorage.MODID)
+public final class BetterSophisticatedStorage
+{
+    public static final String MODID = "better_sophisticated_storage";
+
+    public BetterSophisticatedStorage(IEventBus modEventBus, ModContainer ignored)
+    {
+        modEventBus.addListener(NetworkHandler::registerPayloads);
+    }
+
+    public static ResourceLocation id(String path)
+    {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
+    }
+}
+

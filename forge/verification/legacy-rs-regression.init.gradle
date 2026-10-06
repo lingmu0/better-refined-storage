@@ -1,0 +1,21 @@
+gradle.projectsEvaluated {
+    def project = gradle.rootProject
+    def rsJar = project.findProperty('legacyRsJar')
+    if (rsJar == null || !project.file(rsJar).isFile()) {
+        throw new GradleException('Pass -PlegacyRsJar=<path to refinedstorage-1.12.4.jar>')
+    }
+    def regression = project.sourceSets.create('legacyRsRegression') {
+        java.srcDir('verification/src')
+        compileClasspath += project.sourceSets.main.output + project.sourceSets.main.compileClasspath
+        runtimeClasspath += project.sourceSets.main.output + project.sourceSets.main.runtimeClasspath
+        runtimeClasspath += project.files(rsJar)
+    }
+    project.tasks.register('verifyLegacyRefinedStorage', JavaExec) {
+        dependsOn project.tasks.named(regression.classesTaskName)
+        classpath = regression.runtimeClasspath
+        mainClass = 'net.xuwu.bettersophisticatedstorage.common.LegacyRefinedStorageRegression'
+        javaLauncher = project.javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+}
