@@ -2,6 +2,11 @@
 
 一个基于“更好的超越维度”界面思路的独立附属模组，为精致存储提供便携终端侧边栏。
 
+[公开源码与问题反馈](https://github.com/lingmu0/better-sophisticated-storage) ·
+[CurseForge](https://www.curseforge.com/minecraft/mc-mods/better-sophisticated-storage)
+
+源码同时保留 `forge/` 和 `neoforge/` 目录；`mc-1.20.1`、`mc-1.21.1` 分支为对应版本发布时的源码快照。
+
 ## 功能
 
 - 只有玩家携带已绑定且可访问网络的 RS 无线终端（含创造无线终端），或已连接的
