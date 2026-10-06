@@ -3,7 +3,7 @@
 一个精致存储（Refined Storage）附属模组，为已连接的无线终端提供可搜索的库存与容器侧边栏。界面风格参考“更好的超越维度”。
 
 [公开源码与问题反馈](https://github.com/lingmu0/better-refined-storage) ·
-[CurseForge](https://www.curseforge.com/minecraft/mc-mods/better-sophisticated-storage)
+[CurseForge](https://www.curseforge.com/minecraft/mc-mods/better-refined-storage)
 
 源码同时保留 `forge/` 和 `neoforge/` 目录；`mc-1.20.1`、`mc-1.21.1` 分支为对应版本发布时的源码快照。
 
